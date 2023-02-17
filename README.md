@@ -10,8 +10,12 @@ Page home Django Rest_framework
 ## Page use Swagger
 [https://vincetony99.pythonanywhere.com/swagger/](https://vincetony99.pythonanywhere.com/swagger/)
 ## Use Postman get token(use Oauth2)
--Method: POST
+```js
+GET: /o/token/
+```
 ![preview image](https://www.linkpicture.com/q/Screenshot-104_1.png)
 ## get user by token
--Method: GET
+```js
+GET: /users/current-user/
+```
 ![image](https://www.linkpicture.com/q/Screenshot-105_1.png)
