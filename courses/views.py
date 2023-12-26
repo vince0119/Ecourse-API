@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import viewsets, generics, status, permissions
-from .models import Category, Course, Lesson, Tag, User, Comment, Action, Rating, LessonView
+from .models import Category, Course, Lesson, Tag, User, Comment, Action, Rating, LessonView, MemberView
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.http import Http404
@@ -13,10 +13,12 @@ from .serializers import (CategorySerializer,
                             CommentSerializer,
                             ActionSerializer,
                             RatingSerializer,
-                            LessonViewSerializer)
+                            LessonViewSerializer,
+                            MemberSerializer)
 from .paginator import BasePagination
 from django.conf import settings
 from django.db.models import F
+from rest_framework.parsers import MultiPartParser
 
 
 # Create your views here.
@@ -27,6 +29,7 @@ class CategoryViewSet(viewsets.ViewSet, generics.ListAPIView):
 class CourseViewSet(viewsets.ViewSet, generics.ListAPIView):
     serializer_class = CourseSerializer
     pagination_class = BasePagination
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
         courses = Course.objects.filter(active=True)
@@ -54,19 +57,24 @@ class CourseViewSet(viewsets.ViewSet, generics.ListAPIView):
             
             return Response(LessonSerializer(lessons, many = True).data, status = status.HTTP_200_OK)
     
-
+# class LessonView(viewsets.ViewSet, generics.ListAPIView):
+#     queryset = Lesson.objects.all()
+#     serializer_class = LessonSerializer
 
 class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
     # url: /lessons/{lesson_id}
     # method: GET
     queryset = Lesson.objects.filter(active = True)
     serializer_class = LessonDetailSerializer
+    # permission_classes = [permissions.IsAuthenticated]
     
     def get_permissions(self):
         if self.action in ['add_comment', 'take_action', 'rate']:
             return [permissions.IsAuthenticated()]
+            # return [permissions.AllowAny()]
         
         return [permissions.AllowAny()]
+        # return [permissions.IsAuthenticated()]
     
     @action(methods=['post'], detail=True, url_path = 'tags')
     def add_tag(self, request, pk):
@@ -134,9 +142,10 @@ class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
         return Response(LessonViewSerializer(v).data, status=status.HTTP_200_OK)
 
     
-class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
+class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.RetrieveAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserSerializer
+    parser_classes = [MultiPartParser,]
     
     def get_permissions(self):
         if self.action == 'get_current_user':
@@ -165,7 +174,13 @@ class CommentViewSet(viewsets.ViewSet, generics.DestroyAPIView, generics.UpdateA
             super().destroy(request, *args, **kwargs)
             
         return Response(status=status.HTTP_403_FORBIDDEN)
-    
+
+
+
+class MemberViewSet(viewsets.ViewSet, generics.ListAPIView):
+    queryset = MemberView.objects.all()
+    serializer_class = MemberSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
 class AuthInfo(APIView):
     def get(self, request):

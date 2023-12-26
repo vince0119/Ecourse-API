@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from courses.models import Category, Course, Lesson, Tag, User, Comment, Action, Rating, LessonView
+from courses.models import Category, Course, Lesson, Tag, User, Comment, Action, Rating, LessonView, MemberView
 
 
 class CategorySerializer(ModelSerializer):
@@ -77,3 +77,8 @@ class LessonViewSerializer(ModelSerializer):
     class Meta:
         model = LessonView
         fields = ['id', 'views', 'lesson']
+        
+class MemberSerializer(ModelSerializer):
+    class Meta:
+        model = MemberView
+        fields = '__all__'

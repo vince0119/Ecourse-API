@@ -50,8 +50,8 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_INFO = {
-    "client_id": "vqfwCExJWKP04LZg8aWBD2uKfA17zg1YaVPmW0Ml",
-    "client_serect": "lIOnjXVTGT5w7daxhrQMlXyRcH49xAzecmeqWbVsB37R0bcyBifBLKQSvzMGfvkKCdvE56wwT3kKTS7Wq12ql2yrx0X5iM7cFLwsvY1D5mpqskOzaCihvgDZJXa09jtt",
+    "client_id": "XxQnpYBq1EfPAdZbZrrjf7HhFc4diHDiTBluohQ7",
+    "client_serect": "SV5x9vgGGeUXTm0bRm62c1En8Xv0P2Gieywv1hd4mN8ZwdnjZN4YBKno5QZJvPiTTpaeZ0XagnLm5tvqwzqmLsdoEtsSFK12cfg26BNDvdGRQhusm0IFr6YD7aa391KV",
 }
 
 MIDDLEWARE = [
@@ -89,12 +89,12 @@ WSGI_APPLICATION = 'ecoursesv2.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecoursesv2',
-        'USER': 'root',
-        'PASSWORD': '1234',
-    }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "USER": "postgres",
+        "NAME": "ecoursev1",
+        "PASSWORD": "1234",
+    },
 }
 
 
