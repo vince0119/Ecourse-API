@@ -27,4 +27,4 @@ jobs:
         pip install -r ecoursesv2/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python ecoursesv2/manage.py test
