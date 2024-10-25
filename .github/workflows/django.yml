@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd /vince/Ecourse-API
+            cd /home/ubuntu/vince/Ecourse-API
             git pull origin main
             docker-compose down
             docker-compose up -d
