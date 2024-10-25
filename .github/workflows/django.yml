@@ -48,6 +48,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            eval $(ssh-agent -s)
+            echo "${{ secrets.SSH_KEY }}" | tr -d '\r' | ssh-add -
             cd /home/ubuntu/vince/Ecourse-API
             git pull origin main
             docker compose down
