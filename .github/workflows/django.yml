@@ -46,6 +46,7 @@ jobs:
           port: 10017
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /vince/Ecourse-API
             git pull origin main
